@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Tracker 2025–2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #16161f;
+    --surface3: #1c1c28;
+    --border: #2a2a3a;
+    --border2: #363650;
+    --text: #e8e8f0;
+    --text2: #9090b0;
+    --text3: #5a5a7a;
+    --accent: #7c6af7;
+    --accent2: #9f94ff;
+    --accent-glow: rgba(124,106,247,0.25);
+    --green: #3dd68c;
+    --green-dim: rgba(61,214,140,0.15);
+    --amber: #f5a623;
+    --amber-dim: rgba(245,166,35,0.15);
+    --red: #ff5e72;
+    --red-dim: rgba(255,94,114,0.15);
+    --cyan: #38c9d4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Space Mono', monospace;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Subtle grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(124,106,247,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,106,247,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+  }
+
+  /* Header */
+  header {
+    padding: 48px 0 36px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 36px;
+  }
+
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .logo-block h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .logo-block h1 span {
+    color: var(--accent2);
+  }
+
+  .logo-block p {
+    margin-top: 6px;
+    font-size: 0.72rem;
+    color: var(--text3);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .header-stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .stat-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 18px;
+    text-align: center;
+  }
+
+  .stat-pill .num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent2);
+    display: block;
+  }
+
+  .stat-pill .label {
+    font-size: 0.65rem;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Controls bar */
+  .controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 28px;
+  }
+
+  .search-wrap {
+    flex: 1;
+    min-width: 220px;
+    position: relative;
+  }
+
+  .search-wrap svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text3);
+    pointer-events: none;
+  }
+
+  .search-wrap input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px 10px 38px;
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-wrap input:focus { border-color: var(--accent); }
+  .search-wrap input::placeholder { color: var(--text3); }
+
+  .filter-group {
+    display: flex;
+    gap: 6px;
+  }
+
+  .filter-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 8px 14px;
+    color: var(--text2);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .filter-btn:hover { border-color: var(--accent); color: var(--text); }
+  .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* Section label */
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--text3);
+    margin-bottom: 14px;
+    padding-left: 2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Year badge */
+  .year-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 32px 0 16px;
+  }
+
+  .year-badge {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .year-badge.y2025 { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,166,35,0.3); }
+  .year-badge.y2026 { background: var(--accent-glow); color: var(--accent2); border: 1px solid rgba(124,106,247,0.3); }
+
+  .year-divider hr { flex: 1; border: none; border-top: 1px solid var(--border); }
+
+  /* Table */
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+  }
+
+  thead {
+    background: var(--surface3);
+    border-bottom: 1px solid var(--border2);
+  }
+
+  th {
+    text-align: left;
+    padding: 12px 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text3);
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s;
+  }
+
+  th:hover { color: var(--text); }
+  th .sort-arrow { margin-left: 4px; opacity: 0.5; }
+  th.sorted { color: var(--accent2); }
+  th.sorted .sort-arrow { opacity: 1; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.12s;
+    animation: fadeRow 0.3s ease both;
+  }
+
+  @keyframes fadeRow {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--surface2); }
+  tbody tr.in-list { background: rgba(124,106,247,0.04); }
+  tbody tr.hidden { display: none; }
+
+  td {
+    padding: 13px 16px;
+    font-size: 0.78rem;
+    vertical-align: middle;
+  }
+
+  /* Rank col */
+  .td-rank {
+    color: var(--text3);
+    font-size: 0.68rem;
+    font-weight: 700;
+    width: 40px;
+  }
+
+  /* Game name */
+  .td-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.88rem;
+    max-width: 220px;
+  }
+
+  .td-name a {
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.15s;
+  }
+
+  .td-name a:hover { color: var(--accent2); }
+
+  .yt-icon {
+    opacity: 0;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+    color: var(--red);
+  }
+
+  tbody tr:hover .yt-icon { opacity: 1; }
+
+  /* Genre tag */
+  .genre-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    border: 1px solid;
+  }
+
+  /* Status */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .status-badge.released { background: var(--green-dim); color: var(--green); border: 1px solid rgba(61,214,140,0.25); }
+  .status-badge.upcoming { background: var(--accent-glow); color: var(--accent2); border: 1px solid rgba(124,106,247,0.25); }
+  .status-badge.confirmed { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,166,35,0.25); }
+
+  .status-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .released .status-dot { background: var(--green); }
+  .upcoming .status-dot { background: var(--accent2); animation: pulse 1.6s infinite; }
+  .confirmed .status-dot { background: var(--amber); }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* Notes col */
+  .td-notes {
+    color: var(--text2);
+    font-size: 0.72rem;
+    line-height: 1.5;
+    max-width: 340px;
+  }
+
+  /* Add to list button */
+  .btn-list {
+    background: transparent;
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    padding: 6px 0;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: all 0.15s;
+    white-space: nowrap;
+    color: var(--text2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 72px;
+  }
+
+  .btn-list:hover { border-color: var(--accent); color: var(--accent2); }
+  .btn-list.added { background: var(--accent-glow); border-color: var(--accent); color: var(--accent2); }
+  .btn-list.added:hover { background: var(--red-dim); border-color: var(--red); color: var(--red); }
+  .btn-list.added:hover .btn-list-text::before { content: 'Remove'; }
+  .btn-list.added .btn-list-text { position: relative; }
+  .btn-list.added .btn-list-text span { display: none; }
+  .btn-list.added .btn-list-text::before { content: 'Saved'; }
+
+  /* My list panel */
+  .mylist-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+    display: none;
+  }
+
+  .mylist-panel.visible { display: block; }
+
+  .mylist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .mylist-header h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent2);
+  }
+
+  .btn-clear {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 12px;
+    color: var(--text3);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .btn-clear:hover { border-color: var(--red); color: var(--red); }
+
+  .mylist-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .mylist-chip {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.72rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: chipIn 0.2s ease;
+  }
+
+  @keyframes chipIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .mylist-chip span { font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 600; }
+
+  .chip-remove {
+    background: none;
+    border: none;
+    color: var(--text3);
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    padding: 0;
+    transition: color 0.15s;
+  }
+
+  .chip-remove:hover { color: var(--red); }
+
+  .mylist-empty {
+    color: var(--text3);
+    font-size: 0.75rem;
+    font-style: italic;
+  }
+
+  /* Genre color mapping */
+  .g-rpg { color: #a78bfa; border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.08); }
+  .g-action { color: #f97316; border-color: rgba(249,115,22,0.3); background: rgba(249,115,22,0.08); }
+  .g-horror { color: #ef4444; border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.08); }
+  .g-fps { color: #22d3ee; border-color: rgba(34,211,238,0.3); background: rgba(34,211,238,0.08); }
+  .g-platformer { color: #84cc16; border-color: rgba(132,204,22,0.3); background: rgba(132,204,22,0.08); }
+  .g-strategy { color: #f59e0b; border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.08); }
+  .g-adventure { color: #10b981; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.08); }
+  .g-metroidvania { color: #e879f9; border-color: rgba(232,121,249,0.3); background: rgba(232,121,249,0.08); }
+  .g-racing { color: #facc15; border-color: rgba(250,204,21,0.3); background: rgba(250,204,21,0.08); }
+  .g-soulslike { color: #fb923c; border-color: rgba(251,146,60,0.3); background: rgba(251,146,60,0.08); }
+  .g-survival { color: #4ade80; border-color: rgba(74,222,128,0.3); background: rgba(74,222,128,0.08); }
+  .g-openworld { color: #38bdf8; border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.08); }
+
+  /* Played row */
+  tbody tr.played td.td-name a {
+    color: var(--text3);
+    text-decoration: line-through;
+    text-decoration-color: var(--text3);
+  }
+  tbody tr.played { opacity: 0.55; }
+  tbody tr.played:hover { opacity: 0.8; }
+
+  .played-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: rgba(61,214,140,0.1);
+    color: var(--green);
+    border: 1px solid rgba(61,214,140,0.25);
+    margin-left: 6px;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  /* Played button */
+  .btn-played {
+    background: transparent;
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: all 0.15s;
+    white-space: nowrap;
+    color: var(--text3);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .btn-played:hover { border-color: var(--green); color: var(--green); }
+  .btn-played.played { background: rgba(61,214,140,0.1); border-color: rgba(61,214,140,0.4); color: var(--green); }
+  .btn-played.played:hover { background: var(--red-dim); border-color: var(--red); color: var(--red); }
+
+  .actions-cell {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  /* Chip played indicator */
+  .chip-played-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+    margin-right: 2px;
+  }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--text3);
+    font-size: 0.8rem;
+    display: none;
+  }
+
+  .empty-state.visible { display: block; }
+
+  /* MC score badge */
+  .mc-badge {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .mc-great { background: rgba(61,214,140,0.15); color: #3dd68c; border: 1px solid rgba(61,214,140,0.3); }
+  .mc-good  { background: rgba(245,166,35,0.12);  color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+  .mc-ok    { background: rgba(255,94,114,0.1);   color: #ff7a89; border: 1px solid rgba(255,94,114,0.25); }
+
+  /* Drag handle */
+  .drag-handle {
+    cursor: grab;
+    color: var(--text3);
+    padding: 0 2px;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  .drag-handle:active { cursor: grabbing; }
+
+  .td-pos {
+    color: var(--text3);
+    font-size: 0.68rem;
+    font-weight: 700;
+    width: 48px;
+    display: none;
+  }
+  .mylist-view .td-pos { display: table-cell; }
+
+  .th-pos { display: none; }
+  .mylist-view .th-pos { display: table-cell; }
+
+  tbody tr.drag-over { outline: 1px solid var(--accent); background: var(--surface3) !important; }
+  tbody tr.dragging { opacity: 0.4; }
+
+  /* Back to top */
+  .back-to-top {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    padding: 8px 20px;
+    color: var(--text2);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: border-color 0.15s, color 0.15s;
+    z-index: 100;
+    white-space: nowrap;
+  }
+  .back-to-top:hover { border-color: var(--accent); color: var(--accent2); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .logo-block h1 { font-size: 1.6rem; }
+    .header-stats { gap: 10px; }
+    .filter-group { flex-wrap: wrap; }
+    td, th { padding: 10px 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="header-inner">
+      <div class="logo-block">
+        <h1>GAME<span>TRACKER</span></h1>
+        <p>2025 Released &amp; 2026 Upcoming · Single Player Edition</p>
+      </div>
+      <div class="header-stats">
+        <div class="stat-pill">
+          <span class="num" id="stat-total">0</span>
+          <span class="label">Total Games</span>
+        </div>
+        <div class="stat-pill">
+          <span class="num" id="stat-released">0</span>
+          <span class="label">Released</span>
+        </div>
+        <div class="stat-pill">
+          <span class="num" id="stat-upcoming">0</span>
+          <span class="label">Upcoming</span>
+        </div>
+        <div class="stat-pill">
+          <span class="num" id="stat-mylist">0</span>
+          <span class="label">My List</span>
+        </div>
+        <div class="stat-pill">
+          <span class="num" id="stat-played">0</span>
+          <span class="label">Played</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="search-wrap">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search" placeholder="Search games..." oninput="filterGames()" />
+    </div>
+    <div class="filter-group">
+      <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+      <button class="filter-btn" onclick="setFilter('2024', this)">2024</button>
+      <button class="filter-btn" onclick="setFilter('2025', this)">2025</button>
+      <button class="filter-btn" onclick="setFilter('released', this)">Released</button>
+      <button class="filter-btn" onclick="setFilter('upcoming', this)">Upcoming</button>
+      <button class="filter-btn" onclick="setFilter('mylist', this)">My List</button>
+      <button class="filter-btn" onclick="setFilter('played', this)">✓ Played</button>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="section-label">Full Database</div>
+  <div class="table-wrap">
+    <table id="game-table">      <thead>
+        <tr>
+          <th class="th-pos">#</th>
+          <th>List</th>
+          <th onclick="sortTable('name')">Game<span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('genre')">Genre<span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('status')">Status<span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('date')">Release<span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('year')">Year<span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('meta')" title="Metacritic Score">MC<span class="sort-arrow">↕</span></th>
+          <th onclick="sortTable('hltb')" title="HowLongToBeat main story hours">HLTB<span class="sort-arrow">↕</span></th>
+          <th>Notes</th>
+          <th onclick="sortTable('played')">Played<span class="sort-arrow">↕</span></th>
+        </tr>
+      </thead>
+      <tbody id="game-body"></tbody>
+    </table>
+    <div class="empty-state" id="empty-state">No games match your filter.</div>
+  </div>
+
+</div>
+
+<button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  Back to top
+</button>
+
+<script>
+const GAMES = [
+  // ── 2024 RELEASED ──
+  { rank: 1,  name: "Astro Bot", genre: "3D Platformer", genreClass: "g-platformer", year: 2024, status: "released", date: "Sep 6, 2024", meta: 94, hltb: 7, notes: "TGA 2024 Game of the Year — a near-perfect PS5 platformer packed with PlayStation nostalgia and inventive level design." },
+  { rank: 2,  name: "Black Myth: Wukong", genre: "Action RPG", genreClass: "g-action", year: 2024, status: "released", date: "Aug 20, 2024", meta: 81, hltb: 28, notes: "Steam GOTY 2024 — China's first AAA triumph, 20M+ copies sold. Journey to the West reimagined with stunning UE5 visuals and brutal combat." },
+  { rank: 3,  name: "Metaphor: ReFantazio", genre: "JRPG", genreClass: "g-rpg", year: 2024, status: "released", date: "Oct 11, 2024", meta: 94, hltb: 68, notes: "Atlus at their absolute peak — fantasy RPG blending Persona's social systems with a politically charged story. 80+ hours of brilliance." },
+  { rank: 4,  name: "Final Fantasy VII Rebirth", genre: "Action RPG", genreClass: "g-rpg", year: 2024, status: "released", date: "Feb 29, 2024", meta: 92, hltb: 40, notes: "TGA GOTY nominee — massive open-world expansion of the FF7 remake trilogy, packed with content and jaw-dropping set pieces." },
+  { rank: 5,  name: "Balatro", genre: "Roguelite/Card", genreClass: "g-strategy", year: 2024, status: "released", date: "Feb 20, 2024", meta: 90, hltb: 10, notes: "The most addictive game of 2024 — poker-based deckbuilding roguelite that consumed countless hours from millions of players." },
+  { rank: 6,  name: "Elden Ring: Shadow of the Erdtree", genre: "Souls-Like DLC", genreClass: "g-soulslike", year: 2024, status: "released", date: "Jun 21, 2024", meta: 94, hltb: 30, notes: "TGA GOTY nominee — the largest and most brutal FromSoftware expansion ever made. A full second game's worth of content." },
+  { rank: 7,  name: "Indiana Jones and the Great Circle", genre: "Action/Adventure", genreClass: "g-adventure", year: 2024, status: "released", date: "Dec 9, 2024", meta: 86, hltb: 15, notes: "MachineGames' masterpiece — best Indy game ever made, brilliant first-person adventure with stealth, puzzles, and globe-trotting action." },
+  { rank: 8,  name: "Silent Hill 2 Remake", genre: "Survival Horror", genreClass: "g-horror", year: 2024, status: "released", date: "Oct 8, 2024", meta: 86, hltb: 9, notes: "Bloober Team's stunning remake of the PS2 classic — over-the-shoulder camera, expanded areas, and Akira Yamaoka's iconic score." },
+  { rank: 9,  name: "Like a Dragon: Infinite Wealth", genre: "JRPG", genreClass: "g-rpg", year: 2024, status: "released", date: "Jan 26, 2024", meta: 89, hltb: 55, notes: "Ichiban and Kiryu's Hawaiian adventure — massive turn-based RPG with wacky humor, deep systems, and genuine emotional moments." },
+  { rank: 10, name: "Persona 3 Reload", genre: "JRPG", genreClass: "g-rpg", year: 2024, status: "released", date: "Feb 2, 2024", meta: 87, hltb: 55, notes: "Definitive version of the beloved PS2 classic — rebuilt from the ground up with modern Persona 5 presentation and quality-of-life improvements." },
+  { rank: 11, name: "Dragon's Dogma 2", genre: "Action RPG", genreClass: "g-rpg", year: 2024, status: "released", date: "Mar 22, 2024", meta: 86, hltb: 35, notes: "Capcom's ambitious RPG sequel — unique Pawn AI system, emergent open world, and deep immersive simulation despite some rough edges." },
+  { rank: 12, name: "Prince of Persia: The Lost Crown", genre: "Metroidvania", genreClass: "g-metroidvania", year: 2024, status: "released", date: "Jan 18, 2024", meta: 86, hltb: 12, notes: "Ubisoft's unexpected gem — tight, beautifully designed 2D Metroidvania with time-manipulation powers and challenging boss fights." },
+  { rank: 13, name: "Unicorn Overlord", genre: "Strategy RPG", genreClass: "g-strategy", year: 2024, status: "released", date: "Mar 8, 2024", meta: 86, hltb: 50, notes: "Vanillaware's tactical masterpiece — deep unit composition strategy wrapped in a gorgeous Odin Sphere-inspired art style." },
+  { rank: 14, name: "The Legend of Zelda: Echoes of Wisdom", genre: "Action/Adventure", genreClass: "g-adventure", year: 2024, status: "released", date: "Sep 26, 2024", meta: 89, hltb: 15, notes: "First mainline Zelda starring Princess Zelda — creative echo-summoning mechanics let you approach every puzzle your own way." },
+  { rank: 15, name: "Senua's Saga: Hellblade II", genre: "Action/Adventure", genreClass: "g-adventure", year: 2024, status: "released", date: "May 21, 2024", meta: 82, hltb: 8, notes: "Ninja Theory's visual and audio masterpiece — the most cinematic game of 2024 with unparalleled psychosis portrayal." },
+  { rank: 16, name: "Stellar Blade", genre: "Action", genreClass: "g-action", year: 2024, status: "released", date: "Apr 26, 2024", meta: 81, hltb: 20, notes: "PS5 exclusive action game with one of 2024's most satisfying combat systems — stylish, challenging, and visually striking." },
+  { rank: 17, name: "Neva", genre: "Action/Platformer", genreClass: "g-platformer", year: 2024, status: "released", date: "Oct 15, 2024", meta: 86, hltb: 5, notes: "Devolver Digital's emotional action platformer — beautiful hand-drawn art, tight combat, and a heart-wrenching story about loss." },
+  { rank: 18, name: "S.T.A.L.K.E.R. 2: Heart of Chornobyl", genre: "FPS/Survival", genreClass: "g-fps", year: 2024, status: "released", date: "Nov 20, 2024", meta: 76, hltb: 35, notes: "Long-awaited sequel from Kyiv — immersive open world in the Chornobyl Exclusion Zone with oppressive atmosphere and branching story." },
+  { rank: 19, name: "Warhammer 40,000: Space Marine 2", genre: "Action", genreClass: "g-action", year: 2024, status: "released", date: "Sep 9, 2024", meta: 84, hltb: 8, notes: "The power fantasy of 2024 — brutal third-person action as an Ultramarine decimating waves of Tyranids in spectacular fashion." },
+  { rank: 20, name: "Banishers: Ghosts of New Eden", genre: "Action RPG", genreClass: "g-rpg", year: 2024, status: "released", date: "Feb 13, 2024", meta: 80, hltb: 18, notes: "Don't Nod's underrated gem — morally rich ghost hunter RPG with a deeply emotional love story at its core." },
+  { rank: 21, name: "Animal Well", genre: "Metroidvania", genreClass: "g-metroidvania", year: 2024, status: "released", date: "May 9, 2024", meta: 91, hltb: 8, notes: "Solo-dev indie sensation — mysterious pixel-art Metroidvania packed with secrets so deep they took the internet months to unravel." },
+  { rank: 22, name: "Lorelei and the Laser Eyes", genre: "Puzzle/Mystery", genreClass: "g-adventure", year: 2024, status: "released", date: "May 16, 2024", meta: 88, hltb: 12, notes: "Simogo's labyrinthine puzzle masterpiece — surreal noir mystery set in a haunted hotel with fiendishly clever logic puzzles." },
+  { rank: 23, name: "UFO 50", genre: "Anthology", genreClass: "g-adventure", year: 2024, status: "released", date: "Sep 18, 2024", meta: 91, hltb: 30, notes: "50 complete retro games from a fictional studio — an astounding achievement of game design with personality oozing from every pixel." },
+  { rank: 24, name: "Paper Mario: The Thousand-Year Door", genre: "RPG", genreClass: "g-rpg", year: 2024, status: "released", date: "May 23, 2024", meta: 88, hltb: 28, notes: "Nintendo's loving Switch remake of the beloved 2004 GameCube classic — beautiful visual overhaul and remixed soundtrack." },
+  { rank: 25, name: "Sonic X Shadow Generations", genre: "Platformer", genreClass: "g-platformer", year: 2024, status: "released", date: "Oct 25, 2024", meta: 82, hltb: 8, notes: "Best Sonic game in years — remaster of Sonic Generations plus an all-new Shadow campaign with creative and satisfying 3D gameplay." },
+  { rank: 26, name: "Frostpunk 2", genre: "Strategy", genreClass: "g-strategy", year: 2024, status: "released", date: "Sep 20, 2024", meta: 85, hltb: 22, notes: "11 bit studios' bleak sequel — city-builder survival strategy with brutal moral choices and expanded political faction systems." },
+  { rank: 27, name: "Shin Megami Tensei V: Vengeance", genre: "JRPG", genreClass: "g-rpg", year: 2024, status: "released", date: "Jun 14, 2024", meta: 87, hltb: 50, notes: "Definitive version of SMT V with a massive new Canon of Vengeance story route and hundreds of demons to fuse and battle." },
+  { rank: 28, name: "Dragon Age: The Veilguard", genre: "Action RPG", genreClass: "g-rpg", year: 2024, status: "released", date: "Oct 31, 2024", meta: 82, hltb: 30, notes: "BioWare's long-awaited return — faster combat and strong companion writing, though a divisive entry among franchise veterans." },
+  { rank: 29, name: "Kunitsu-Gami: Path of the Goddess", genre: "Action/Strategy", genreClass: "g-action", year: 2024, status: "released", date: "Jul 19, 2024", meta: 82, hltb: 12, notes: "Capcom's bold original — unique blend of action and tower defense set in Japanese mythology with gorgeous art and design." },
+  { rank: 30, name: "Pacific Drive", genre: "Survival", genreClass: "g-survival", year: 2024, status: "released", date: "Feb 22, 2024", meta: 79, hltb: 14, notes: "Atmospheric survival driving game set in a surreal Pacific Northwest anomaly zone — your car becomes your companion and fortress." },
+  { rank: 31, name: "Tekken 8", genre: "Fighting", genreClass: "g-action", year: 2024, status: "released", date: "Jan 26, 2024", meta: 90, hltb: 8, notes: "Bandai Namco's best Tekken yet — excellent story mode, the new Heat system revitalising combat, and stunning visuals." },
+  { rank: 32, name: "The Last of Us Part II Remastered", genre: "Action/Adventure", genreClass: "g-adventure", year: 2024, status: "released", date: "Jan 19, 2024", meta: 90, hltb: 15, notes: "PS5 upgrade with No Return roguelike mode and Lost Levels — the definitive way to experience Naughty Dog's controversial masterpiece." },
+  { rank: 33, name: "Star Wars Outlaws", genre: "Open World", genreClass: "g-openworld", year: 2024, status: "released", date: "Aug 30, 2024", meta: 76, hltb: 20, notes: "Ubisoft Massive's scoundrel fantasy — first open-world Star Wars game lets you play as a rogue between the Original Trilogy films." },
+  { rank: 34, name: "Hades 2 (Early Access)", genre: "Roguelite", genreClass: "g-action", year: 2024, status: "released", date: "May 6, 2024", meta: 93, hltb: 12, notes: "Supergiant's extraordinary early access debut — double the content of the original at launch, following Melinoe against Chronos." },
+  { rank: 35, name: "Mouthwashing", genre: "Horror", genreClass: "g-horror", year: 2024, status: "released", date: "Sep 26, 2024", meta: 87, hltb: 3, notes: "Disturbing indie horror in the vein of Disco Elysium — short, brutal, and unforgettable psychological horror aboard a drifting spaceship." },
+  { rank: 36, name: "Children of the Sun", genre: "Puzzle/Action", genreClass: "g-action", year: 2024, status: "released", date: "Apr 9, 2024", meta: 79, hltb: 4, notes: "René Rother's stylish solo debut — one-bullet puzzle shooter where you redirect a single shot through entire enemy encampments." },
+  { rank: 37, name: "Still Wakes the Deep", genre: "Horror", genreClass: "g-horror", year: 2024, status: "released", date: "Jun 18, 2024", meta: 79, hltb: 6, notes: "The Chinese Room's oil rig horror — atmospheric cosmic horror with excellent Scottish voice acting and genuinely terrifying creature design." },
+  { rank: 38, name: "Mullet MadJack", genre: "FPS/Roguelite", genreClass: "g-fps", year: 2024, status: "released", date: "May 15, 2024", meta: 88, hltb: 3, notes: "Hyperkinetic retro FPS roguelite — you die if you stop moving and killing, resulting in one of the most intense games of the year." },
+  { rank: 39, name: "Ace Attorney Investigations Collection", genre: "Visual Novel", genreClass: "g-adventure", year: 2024, status: "released", date: "Sep 6, 2024", meta: 84, hltb: 30, notes: "Capcom's remaster of two beloved spin-off games finally localized — essential mysteries featuring Miles Edgeworth as the lead investigator." },
+  { rank: 40, name: "Crow Country", genre: "Horror", genreClass: "g-horror", year: 2024, status: "released", date: "May 9, 2024", meta: 81, hltb: 5, notes: "SFB Games' love letter to PS1 survival horror — fixed camera angles, tank controls, and an eerie abandoned theme park mystery." },
+  { rank: 41, name: "Tales of Kenzera: Zau", genre: "Metroidvania", genreClass: "g-metroidvania", year: 2024, status: "released", date: "Apr 23, 2024", meta: 74, hltb: 10, notes: "Surgent Studios' debut — Afrofuturist Metroidvania inspired by Bantu mythology, with a deeply personal story about grief." },
+  { rank: 42, name: "The Legend of Heroes: Trails through Daybreak", genre: "JRPG", genreClass: "g-rpg", year: 2024, status: "released", date: "Jul 5, 2024", meta: 84, hltb: 60, notes: "The start of a bold new Trails arc — protagonist Van Arkride is a bracingly different lead for NIS America's beloved RPG franchise." },
+  { rank: 43, name: "Arco", genre: "RPG", genreClass: "g-rpg", year: 2024, status: "released", date: "Aug 27, 2024", meta: 85, hltb: 8, notes: "Indie western tactical RPG — beautiful pixel art, simultaneous turn-based combat, and a morally complex revenge story." },
+  { rank: 44, name: "Dungeons of Hinterberg", genre: "RPG/Adventure", genreClass: "g-rpg", year: 2024, status: "released", date: "Jul 18, 2024", meta: 80, hltb: 14, notes: "Microbird Games' charming Austrian alpine RPG — dungeon-crawling meets social sim in a tourism-themed fantasy setting." },
+  { rank: 45, name: "Life is Strange: Double Exposure", genre: "Narrative Adventure", genreClass: "g-adventure", year: 2024, status: "released", date: "Oct 29, 2024", meta: 72, hltb: 10, notes: "Max Caulfield returns with a new time-shifting power — emotionally resonant narrative with a bold mystery across parallel timelines." },
+  { rank: 46, name: "Satisfactory 1.0", genre: "Simulation/Builder", genreClass: "g-survival", year: 2024, status: "released", date: "Sep 10, 2024", meta: 91, hltb: 60, notes: "Coffee Stain's factory-building masterpiece reached full release — hundreds of hours of alien-planet automation in first person." },
+  { rank: 47, name: "Mario & Luigi: Brothership", genre: "RPG", genreClass: "g-rpg", year: 2024, status: "released", date: "Nov 7, 2024", meta: 80, hltb: 30, notes: "The beloved series' triumphant return — charming turn-based RPG with the classic double-character gameplay and delightful art style." },
+  { rank: 48, name: "Tactical Breach Wizards", genre: "Strategy", genreClass: "g-strategy", year: 2024, status: "released", date: "Aug 7, 2024", meta: 87, hltb: 10, notes: "Tom Francis' cult indie hit — turn-based tactics with rewindable moves and wonderfully witty writing in a wizard police procedural setting." },
+  { rank: 49, name: "Tekken 8", genre: "Fighting", genreClass: "g-action", year: 2024, status: "released", date: "Jan 26, 2024", meta: 90, hltb: 8, notes: "Bandai Namco delivers the best Tekken entry in years with a surprisingly compelling story mode." },
+  { rank: 50, name: "Microsoft Flight Simulator 2024", genre: "Simulation", genreClass: "g-adventure", year: 2024, status: "released", date: "Nov 19, 2024", meta: 79, hltb: null, notes: "Asobo Studio's sequel — enhanced career mode, more detailed aircraft systems, and the entire Earth to explore in stunning detail." },
+
+  // ── 2025 RELEASED ──
+  { rank: 1,  name: "Clair Obscur: Expedition 33", genre: "RPG", genreClass: "g-rpg", year: 2025, status: "released", date: "Apr 2025", meta: null, hltb: null, notes: "Breakout GOTY contender — turn-based RPG with real-time mechanics from a debut French studio." },
+  { rank: 2,  name: "Death Stranding 2: On the Beach", genre: "Action/Adventure", genreClass: "g-adventure", year: 2025, status: "released", date: "Jun 2025", meta: null, hltb: null, notes: "Kojima's open-world epic set in Australia — widely praised as GotY-level by many critics." },
+  { rank: 3,  name: "Kingdom Come: Deliverance 2", genre: "RPG", genreClass: "g-rpg", year: 2025, status: "released", date: "Feb 2025", meta: null, hltb: null, notes: "Immersive medieval RPG sequel with outstanding quest design and deep systems." },
+  { rank: 4,  name: "Hollow Knight: Silksong", genre: "Metroidvania", genreClass: "g-metroidvania", year: 2025, status: "released", date: "Aug 2025", meta: null, hltb: null, notes: "8 years in the making — denser, more demanding, and worth every moment of the wait." },
+  { rank: 5,  name: "Ghost of Yōtei", genre: "Open World Action", genreClass: "g-openworld", year: 2025, status: "released", date: "Oct 2025", meta: null, hltb: null, notes: "Sucker Punch's sequel set in 17th-century Hokkaido — gorgeous and expansive." },
+  { rank: 6,  name: "DOOM: The Dark Ages", genre: "FPS", genreClass: "g-fps", year: 2025, status: "released", date: "May 2025", meta: null, hltb: null, notes: "Medieval Doom prequel with shield mechanics, dragon riding, and signature carnage." },
+  { rank: 7,  name: "Metal Gear Solid Δ: Snake Eater", genre: "Action/Stealth", genreClass: "g-action", year: 2025, status: "released", date: "Aug 2025", meta: null, hltb: null, notes: "Stunning Unreal Engine 5 remake of the beloved PS2 classic." },
+  { rank: 8,  name: "Assassin's Creed Shadows", genre: "Action RPG", genreClass: "g-rpg", year: 2025, status: "released", date: "Mar 2025", meta: null, hltb: null, notes: "Dual protagonists in feudal Japan — one of the franchise's most complete entries." },
+  { rank: 9,  name: "Avowed", genre: "First-Person RPG", genreClass: "g-rpg", year: 2025, status: "released", date: "Feb 2025", meta: null, hltb: null, notes: "Obsidian's Skyrim-rival set in the Pillars of Eternity universe — sharp FP combat." },
+  { rank: 10, name: "Silent Hill f", genre: "Survival Horror", genreClass: "g-horror", year: 2025, status: "released", date: "Mar 2025", meta: null, hltb: null, notes: "Konami's Japanese-set psychological horror — layered and disturbing across playthroughs." },
+  { rank: 11, name: "Metroid Prime 4: Beyond", genre: "Action/Adventure", genreClass: "g-adventure", year: 2025, status: "released", date: "Dec 2025", meta: null, hltb: null, notes: "Retro Studios' long-awaited return — Samus with new psychic powers on planet Viewros." },
+  { rank: 12, name: "Donkey Kong Bananza", genre: "3D Platformer", genreClass: "g-platformer", year: 2025, status: "released", date: "Jul 2025", meta: null, hltb: null, notes: "Switch 2 launch-window platformer — chaotic, joyful, and surprisingly deep." },
+  { rank: 13, name: "Blue Prince", genre: "Puzzle/Adventure", genreClass: "g-adventure", year: 2025, status: "released", date: "Mar 2025", meta: null, hltb: null, notes: "Ever-shifting manor roguelite puzzle game — one of the best puzzle games in a decade." },
+  { rank: 14, name: "Hades 2", genre: "Roguelite", genreClass: "g-action", year: 2025, status: "released", date: "May 2025", meta: null, hltb: null, notes: "Full 1.0 launch of Melinoe's underworld journey — excellent art, systems, and story." },
+  { rank: 15, name: "Dying Light: The Beast", genre: "Action/Horror", genreClass: "g-horror", year: 2025, status: "released", date: "Aug 2025", meta: null, hltb: null, notes: "Kyle Crane returns with new powers — night-terror open world at its finest." },
+  { rank: 16, name: "The Elder Scrolls IV: Oblivion Remastered", genre: "RPG", genreClass: "g-rpg", year: 2025, status: "released", date: "Apr 2025", meta: null, hltb: null, notes: "Classic Bethesda RPG rebuilt in Unreal Engine 5 — holds up remarkably well." },
+  { rank: 17, name: "Fable", genre: "Action RPG", genreClass: "g-rpg", year: 2025, status: "released", date: "Summer 2025", meta: null, hltb: null, notes: "Playground Games' reboot of the beloved Albion RPG — humor and morality intact." },
+  { rank: 18, name: "Mafia: The Old Country", genre: "Action/Adventure", genreClass: "g-adventure", year: 2025, status: "released", date: "Aug 2025", meta: null, hltb: null, notes: "Returns to Sicily — the best Mafia entry in years with a brilliant story." },
+  { rank: 19, name: "Vampire: The Masquerade – Bloodlines 2", genre: "RPG", genreClass: "g-rpg", year: 2025, status: "released", date: "Sep 2025", meta: null, hltb: null, notes: "Dark vampire RPG in modern Seattle — deep discipline customization and rich narrative." },
+  { rank: 20, name: "Where Winds Meet", genre: "Open World RPG", genreClass: "g-openworld", year: 2025, status: "released", date: "Jan 2025", meta: null, hltb: null, notes: "Ambitious wuxia open world from Chinese studio Everstone — extraordinary freedom." },
+  { rank: 21, name: "The Alters", genre: "Sci-Fi Survival", genreClass: "g-survival", year: 2025, status: "released", date: "Jun 2025", meta: null, hltb: null, notes: "Clone-yourself survival on a hostile planet — darkly fascinating character drama." },
+  { rank: 22, name: "Like a Dragon: Pirate Yakuza in Hawaii", genre: "Action RPG", genreClass: "g-rpg", year: 2025, status: "released", date: "Feb 2025", meta: null, hltb: null, notes: "Majima gets amnesia and becomes a pirate — exactly as unhinged and brilliant as it sounds." },
+  { rank: 23, name: "The First Berserker: Khazan", genre: "Souls-Like", genreClass: "g-soulslike", year: 2025, status: "released", date: "Mar 2025", meta: null, hltb: null, notes: "Cell-shaded action with brutal, rewarding boss fights set in the DNF universe." },
+  { rank: 24, name: "Atomfall", genre: "Open World", genreClass: "g-openworld", year: 2025, status: "released", date: "Mar 2025", meta: null, hltb: null, notes: "British post-nuclear open world — mysterious, atmospheric exploration of Northern England." },
+  { rank: 25, name: "Ender Magnolia: Bloom in the Mist", genre: "Metroidvania", genreClass: "g-metroidvania", year: 2025, status: "released", date: "Jan 2025", meta: null, hltb: null, notes: "Gorgeous 2D sequel with stellar boss fights, deep customization, and a Mili soundtrack." },
+  { rank: 26, name: "Sid Meier's Civilization VII", genre: "Strategy", genreClass: "g-strategy", year: 2025, status: "released", date: "Feb 2025", meta: null, hltb: null, notes: "Bold redesign of the franchise — new age system and city expansion bring fresh depth." },
+  { rank: 27, name: "Cronos: The New Dawn", genre: "Survival Horror", genreClass: "g-horror", year: 2025, status: "released", date: "Oct 2025", meta: null, hltb: null, notes: "Dark sci-fi horror RPG from Bloober Team — bleak and atmospheric." },
+  { rank: 28, name: "Monster Hunter Wilds", genre: "Action RPG", genreClass: "g-action", year: 2025, status: "released", date: "Feb 2025", meta: null, hltb: null, notes: "Massive open-world hunting sequel — one of the year's biggest commercial launches." },
+  { rank: 29, name: "Dynasty Warriors: Origins", genre: "Action", genreClass: "g-action", year: 2025, status: "released", date: "Jan 2025", meta: null, hltb: null, notes: "Refined return to the hack-and-slash formula with impressive large-scale battles." },
+  { rank: 30, name: "Hell Is Us", genre: "Action/Adventure", genreClass: "g-adventure", year: 2025, status: "released", date: "Sep 2025", meta: null, hltb: null, notes: "Souls-adjacent action-adventure set in a war-torn world with a mystery at its core." },
+  { rank: 31, name: "Lies of P: Overture", genre: "Souls-Like DLC", genreClass: "g-soulslike", year: 2025, status: "released", date: "Jan 2025", meta: null, hltb: null, notes: "Substantial expansion that humbles even veterans with new weapons and bosses." },
+  { rank: 32, name: "Borderlands 4", genre: "FPS/RPG", genreClass: "g-fps", year: 2025, status: "released", date: "Sep 2025", meta: null, hltb: null, notes: "Deeper skill trees, better movement, and a fresh planet called Kairos." },
+  { rank: 33, name: "Wuchang: Fallen Feathers", genre: "Souls-Like", genreClass: "g-soulslike", year: 2025, status: "released", date: "Jun 2025", meta: null, hltb: null, notes: "Chinese mythology souls-like with stylish combat and striking visuals." },
+  { rank: 34, name: "Tainted Grail: The Fall of Avalon", genre: "RPG", genreClass: "g-rpg", year: 2025, status: "released", date: "Feb 2025", meta: null, hltb: null, notes: "Dark Arthurian open-world RPG — grim, ambitious, and surprisingly deep." },
+  { rank: 35, name: "Citizen Sleeper 2: Starward Vector", genre: "Narrative RPG", genreClass: "g-rpg", year: 2025, status: "released", date: "Jan 2025", meta: null, hltb: null, notes: "Critically praised sci-fi narrative RPG with deep character work." },
+  { rank: 36, name: "Bionic Bay", genre: "Platformer", genreClass: "g-platformer", year: 2025, status: "released", date: "Mar 2025", meta: null, hltb: null, notes: "Stunning precision platformer with a unique swap mechanic and industrial aesthetic." },
+  { rank: 37, name: "Ninja Gaiden 2 Black", genre: "Action", genreClass: "g-action", year: 2025, status: "released", date: "Jan 2025", meta: null, hltb: null, notes: "Enhanced remaster of the legendary brutal action classic." },
+  { rank: 38, name: "Eternal Strands", genre: "Action/Adventure", genreClass: "g-adventure", year: 2025, status: "released", date: "Jan 2025", meta: null, hltb: null, notes: "Inventive combat mechanics and a rich world that rewards exploration." },
+  { rank: 39, name: "Dispatch", genre: "Action/Adventure", genreClass: "g-adventure", year: 2025, status: "released", date: "Jul 2025", meta: null, hltb: null, notes: "Superhero action game following a retired hero — great traversal and frantic combat." },
+  { rank: 40, name: "Into the Dead: Our Darkest Days", genre: "Survival Horror", genreClass: "g-horror", year: 2025, status: "released", date: "May 2025", meta: null, hltb: null, notes: "Praised zombie survival horror with bleak atmosphere and tough decisions." },
+  { rank: 41, name: "Little Nightmares 3", genre: "Puzzle Horror", genreClass: "g-horror", year: 2025, status: "released", date: "Mar 2025", meta: null, hltb: null, notes: "Atmospheric cooperative puzzle horror continuing the beloved series." },
+  { rank: 42, name: "The Shire: A Lord of the Rings Game", genre: "Cozy/RPG", genreClass: "g-rpg", year: 2025, status: "released", date: "Sep 2025", meta: null, hltb: null, notes: "Relaxing life sim set in the Shire — gardening, fishing, and community storytelling." },
+  { rank: 43, name: "Yakuza 0: Director's Cut", genre: "Action RPG", genreClass: "g-rpg", year: 2025, status: "released", date: "Feb 2025", meta: null, hltb: null, notes: "Expanded rerelease of the acclaimed prequel with new content and quality-of-life improvements." },
+  { rank: 44, name: "Terminator 2D: NO FATE", genre: "Action Platformer", genreClass: "g-platformer", year: 2025, status: "released", date: "Nov 2025", meta: null, hltb: null, notes: "Retro side-scroller capturing the T2 aesthetic with sharp 2D gameplay." },
+  { rank: 45, name: "inZoi", genre: "Life Sim", genreClass: "g-adventure", year: 2025, status: "released", date: "Mar 2025", meta: null, hltb: null, notes: "High-fidelity life sim with photorealistic visuals — drew massive attention at launch." },
+  { rank: 46, name: "Alien: Isolation 2", genre: "Survival Horror", genreClass: "g-horror", year: 2025, status: "released", date: "Nov 2025", meta: null, hltb: null, notes: "Long-awaited sequel to the 2014 horror classic — terrifying stealth survival." },
+  { rank: 47, name: "Max Payne 1 & 2 Remake", genre: "Action", genreClass: "g-action", year: 2025, status: "released", date: "Oct 2025", meta: null, hltb: null, notes: "Remedy's lovingly crafted remake of the classic noir bullet-time shooters." },
+  { rank: 48, name: "Directive 8020", genre: "Horror", genreClass: "g-horror", year: 2025, status: "released", date: "Oct 2025", meta: null, hltb: null, notes: "Sci-fi horror from the Dark Pictures team — claustrophobic and tense." },
+  { rank: 49, name: "Wuchang: Fallen Feathers", genre: "Souls-Like", genreClass: "g-soulslike", year: 2025, status: "released", date: "Jun 2025", meta: null, hltb: null, notes: "Dark fantasy soulslike with fast-paced stylish combat in dynastic China." },
+  { rank: 50, name: "Crimson Desert", genre: "Open World RPG", genreClass: "g-openworld", year: 2025, status: "released", date: "Dec 2025", meta: null, hltb: null, notes: "Pearl Abyss's cinematic open-world epic — sold over 2M copies on day one." },
+
+  // ── 2026 RELEASED SO FAR ──
+  { rank: 51, name: "Resident Evil Requiem", genre: "Survival Horror", genreClass: "g-horror", year: 2026, status: "released", date: "Feb 27, 2026", meta: null, hltb: null, notes: "RE9 — dual protagonists Grace Ashcroft and Leon Kennedy investigate a bioterror outbreak." },
+  { rank: 52, name: "Nioh 3", genre: "Souls-Like", genreClass: "g-soulslike", year: 2026, status: "released", date: "Feb 6, 2026", meta: null, hltb: null, notes: "Third entry in Team Ninja's samurai souls-like — refined combat and demanding encounters." },
+  { rank: 53, name: "Fatal Frame II: Crimson Butterfly Remake", genre: "Survival Horror", genreClass: "g-horror", year: 2026, status: "released", date: "Mar 12, 2026", meta: null, hltb: null, notes: "Koei Tecmo's remake with new areas, side stories, and expanded Camera Obscura mechanics." },
+  { rank: 54, name: "Mouse: P.I. for Hire", genre: "FPS", genreClass: "g-fps", year: 2026, status: "released", date: "Mar 19, 2026", meta: null, hltb: null, notes: "Rubberhose-animation first-person shooter set in Mouseburg — chainsaws and charm." },
+  { rank: 55, name: "Monster Hunter Stories 3: Twisted Reflection", genre: "RPG", genreClass: "g-rpg", year: 2026, status: "released", date: "Mar 13, 2026", meta: null, hltb: null, notes: "Turn-based spin-off continuing the Stories narrative with a new roster of rideable monsters." },
+  { rank: 56, name: "Saros", genre: "Roguelite", genreClass: "g-action", year: 2026, status: "released", date: "Apr 30, 2026", meta: null, hltb: null, notes: "Housemarque's spiritual successor to Returnal — deeper roguelite progression and brutal combat." },
+
+  // ── 2026 UPCOMING ──
+  { rank: 57, name: "Pragmata", genre: "Action", genreClass: "g-action", year: 2026, status: "upcoming", date: "Apr 16, 2026", meta: null, hltb: null, notes: "Capcom sci-fi action game — AI doomsday thriller with stunning visuals." },
+  { rank: 58, name: "007: First Light", genre: "Action/Stealth", genreClass: "g-action", year: 2026, status: "upcoming", date: "May 27, 2026", meta: null, hltb: null, notes: "IO Interactive's Bond origin story — first 007 game in 14 years, Hitman DNA." },
+  { rank: 59, name: "LEGO Batman: Legacy of the Dark Knight", genre: "Action/Adventure", genreClass: "g-adventure", year: 2026, status: "upcoming", date: "May 29, 2026", meta: null, hltb: null, notes: "TT Games' humorous Batman epic with multiple playable characters and a massive Gotham." },
+  { rank: 60, name: "Phantom Blade Zero", genre: "Action", genreClass: "g-action", year: 2026, status: "upcoming", date: "Sep 9, 2026", meta: null, hltb: null, notes: "S-GAME's wuxia dark fantasy — insane animation quality, fast-paced stylish combat on PS5/PC." },
+  { rank: 61, name: "Marvel's Wolverine", genre: "Action/Adventure", genreClass: "g-action", year: 2026, status: "upcoming", date: "Sep 15, 2026", meta: null, hltb: null, notes: "Insomniac's gritty Logan story — darker and more violent than Spider-Man, PS5 exclusive." },
+  { rank: 62, name: "Grand Theft Auto VI", genre: "Open World", genreClass: "g-openworld", year: 2026, status: "upcoming", date: "Nov 19, 2026", meta: null, hltb: null, notes: "Set in Leonida/Vice City — the most anticipated game release in history." },
+  { rank: 63, name: "Fable (2026)", genre: "Action RPG", genreClass: "g-rpg", year: 2026, status: "confirmed", date: "2026 — TBD", meta: null, hltb: null, notes: "If not in 2025 — Playground Games' Albion reboot with British humor and modern RPG systems." },
+  { rank: 64, name: "Gears of War: E-Day", genre: "Action", genreClass: "g-action", year: 2026, status: "confirmed", date: "2026 — TBD", meta: null, hltb: null, notes: "Prequel to the original Gears set during Emergence Day — focused single-player campaign." },
+  { rank: 65, name: "Control: Resonance", genre: "Action/Adventure", genreClass: "g-adventure", year: 2026, status: "confirmed", date: "2026 — TBD", meta: null, hltb: null, notes: "Remedy's Control sequel — play as Dylan Faden in a paranatural Manhattan cityscape." },
+  { rank: 66, name: "The Blood of Dawnwalker", genre: "RPG", genreClass: "g-rpg", year: 2026, status: "confirmed", date: "2026 — TBD", meta: null, hltb: null, notes: "From ex-CD Projekt Red devs — vampire RPG with a 30-day in-game countdown mechanic." },
+  { rank: 67, name: "Onimusha: Way of the Sword", genre: "Action", genreClass: "g-action", year: 2026, status: "confirmed", date: "2026 — TBD", meta: null, hltb: null, notes: "Capcom's samurai franchise revival — Miyamoto Musashi vs. the Genma in Kyoto." },
+  { rank: 68, name: "Tomb Raider: Legacy of Atlantis", genre: "Action/Adventure", genreClass: "g-adventure", year: 2026, status: "confirmed", date: "2026 — TBD", meta: null, hltb: null, notes: "Crystal Dynamics reimagines the 1996 original — pulpy adventure with dinosaurs." },
+  { rank: 69, name: "Halo: Campaign Evolved", genre: "FPS", genreClass: "g-fps", year: 2026, status: "confirmed", date: "2026 — TBD", meta: null, hltb: null, notes: "New Halo single-player campaign from Xbox — long-awaited franchise continuation." },
+  { rank: 70, name: "Ace Combat 8: Wings of Theve", genre: "Action", genreClass: "g-action", year: 2026, status: "confirmed", date: "2026 — TBD", meta: null, hltb: null, notes: "Next entry in the beloved aerial combat franchise set in Strangereal." },
+  { rank: 71, name: "Forza Horizon 6", genre: "Racing", genreClass: "g-racing", year: 2026, status: "confirmed", date: "H1 2026", meta: null, hltb: null, notes: "Open-world racing set across Japan — Tokyo neon streets and the slopes of Mt. Fuji." },
+  { rank: 72, name: "Styx: Blades of Greed", genre: "Action/Stealth", genreClass: "g-action", year: 2026, status: "released", date: "Feb 19, 2026", meta: null, hltb: null, notes: "Goblin assassin stealth game — third entry in the Styx series with expanded mechanics." },
+  { rank: 73, name: "Code Vein 2", genre: "Souls-Like", genreClass: "g-soulslike", year: 2026, status: "released", date: "Jan 30, 2026", meta: null, hltb: null, notes: "Sequel to the vampire souls-like — deeper customization and more complex world design." },
+  { rank: 74, name: "Yakuza Kiwami 3 / Dark Ties", genre: "Action RPG", genreClass: "g-rpg", year: 2026, status: "confirmed", date: "2026 — TBD", meta: null, hltb: null, notes: "Next Yakuza/Like a Dragon entry — continuing the beloved criminal drama franchise." },
+  { rank: 75, name: "Ontos", genre: "Sci-Fi Horror", genreClass: "g-horror", year: 2026, status: "confirmed", date: "2026 — TBD", meta: null, hltb: null, notes: "Frictional Games' (SOMA, Amnesia) new sci-fi horror — philosophical dread expected." },
+];
+
+let myList = JSON.parse(localStorage.getItem('gametracker_list') || '[]');
+let playedList = JSON.parse(localStorage.getItem('gametracker_played') || '[]');
+let currentFilter = 'all';
+let sortCol = 'rank';
+let sortDir = 1;
+
+function ytUrl(name) {
+  return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(name);
+}
+
+function genreColor(gc) {
+  const map = {
+    'g-rpg': '#a78bfa', 'g-action': '#f97316', 'g-horror': '#ef4444',
+    'g-fps': '#22d3ee', 'g-platformer': '#84cc16', 'g-strategy': '#f59e0b',
+    'g-adventure': '#10b981', 'g-metroidvania': '#e879f9', 'g-racing': '#facc15',
+    'g-soulslike': '#fb923c', 'g-survival': '#4ade80', 'g-openworld': '#38bdf8'
+  };
+  return map[gc] || '#9090b0';
+}
+
+function buildTable() {
+  const tbody = document.getElementById('game-body');
+  const search = document.getElementById('search').value.toLowerCase();
+
+  let data = [...GAMES];
+
+  // In mylist view, sort by myList order; otherwise use sort column
+  if (currentFilter === 'mylist') {
+    data.sort((a, b) => {
+      const ai = myList.indexOf(a.name);
+      const bi = myList.indexOf(b.name);
+      if (ai === -1 && bi === -1) return 0;
+      if (ai === -1) return 1;
+      if (bi === -1) return -1;
+      return ai - bi;
+    });
+  } else {
+    data.sort((a, b) => {
+      let va = a[sortCol], vb = b[sortCol];
+      if (sortCol === 'rank') { va = a.rank; vb = b.rank; }
+      // Push nulls to end regardless of direction
+      if (va == null && vb == null) return 0;
+      if (va == null) return 1;
+      if (vb == null) return -1;
+      if (typeof va === 'string') va = va.toLowerCase();
+      if (typeof vb === 'string') vb = vb.toLowerCase();
+      if (va < vb) return -1 * sortDir;
+      if (va > vb) return 1 * sortDir;
+      return 0;
+    });
+  }
+
+  tbody.innerHTML = '';
+  let visible = 0;
+
+  data.forEach((g, idx) => {
+    const inList = myList.includes(g.name);
+    const isPlayed = playedList.includes(g.name);
+    const matchSearch = !search || g.name.toLowerCase().includes(search) || g.genre.toLowerCase().includes(search) || g.notes.toLowerCase().includes(search);
+    const matchFilter =
+      currentFilter === 'all' ? true :
+      currentFilter === '2024' ? g.year === 2024 :
+      currentFilter === '2025' ? g.year === 2025 :
+      currentFilter === 'released' ? g.status === 'released' :
+      currentFilter === 'upcoming' ? (g.status === 'upcoming' || g.status === 'confirmed') :
+      currentFilter === 'mylist' ? inList :
+      currentFilter === 'played' ? isPlayed : true;
+
+    const show = matchSearch && matchFilter;
+    if (show) visible++;
+
+    const statusLabel = g.status === 'released' ? 'Released' : g.status === 'upcoming' ? 'Upcoming' : 'Confirmed';
+    const delay = (idx % 20) * 18;
+
+    const tr = document.createElement('tr');
+    const rowClass = [(inList ? 'in-list' : ''), (isPlayed ? 'played' : ''), (show ? '' : 'hidden')].filter(Boolean).join(' ');
+    tr.className = rowClass;
+    tr.style.animationDelay = `${delay}ms`;
+    tr.dataset.name = g.name;
+    const safeName = g.name.replace(/'/g, "\\'");
+    const listPos = myList.indexOf(g.name);
+    tr.draggable = inList;
+    tr.innerHTML = `
+      <td class="td-pos">${inList ? `<span style="display:flex;align-items:center;gap:6px"><svg class="drag-handle" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="5" r="1" fill="currentColor"/><circle cx="9" cy="12" r="1" fill="currentColor"/><circle cx="9" cy="19" r="1" fill="currentColor"/><circle cx="15" cy="5" r="1" fill="currentColor"/><circle cx="15" cy="12" r="1" fill="currentColor"/><circle cx="15" cy="19" r="1" fill="currentColor"/></svg>${listPos + 1}</span>` : ''}</td>
+      <td>
+        <div class="actions-cell">
+          <button class="btn-list ${inList ? 'added' : ''}" onclick="toggleList('${safeName}', this)">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="${inList ? 'M20 6L9 17l-5-5' : 'M12 5v14M5 12h14'}"/></svg>
+            <span class="btn-list-text"><span>${inList ? '' : 'Add'}</span></span>
+          </button>
+        </div>
+      </td>
+      <td class="td-name">
+        <a href="${ytUrl(g.name)}" target="_blank" rel="noopener">
+          <svg class="yt-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-2.7A12.94 12.94 0 0 0 12 3.5a12.94 12.94 0 0 0-3.82.49 4.83 4.83 0 0 1-3.77 2.7A4.78 4.78 0 0 0 2 11v2a4.78 4.78 0 0 0 2.41 4.31 4.83 4.83 0 0 1 3.77 2.7A12.94 12.94 0 0 0 12 20.5a12.94 12.94 0 0 0 3.82-.49 4.83 4.83 0 0 1 3.77-2.7A4.78 4.78 0 0 0 22 13v-2a4.78 4.78 0 0 0-2.41-4.31zM10 15.5v-7l6 3.5-6 3.5z"/></svg>
+          ${g.name}${isPlayed ? '<span class="played-badge">✓ Played</span>' : ''}
+        </a>
+      </td>
+      <td><span class="genre-tag ${g.genreClass}">${g.genre}</span></td>
+      <td><span class="status-badge ${g.status}"><span class="status-dot"></span>${statusLabel}</span></td>
+      <td style="color:var(--text2);font-size:0.72rem;white-space:nowrap">${g.date}</td>
+      <td style="color:var(--text3);font-size:0.68rem;font-weight:700;white-space:nowrap">${g.year}</td>
+      <td style="white-space:nowrap">${g.meta != null ? `<span class="mc-badge mc-${g.meta >= 90 ? 'great' : g.meta >= 75 ? 'good' : 'ok'}">${g.meta}</span>` : '<span style="color:var(--text3);font-size:0.68rem">—</span>'}</td>
+      <td style="white-space:nowrap;color:var(--text2);font-size:0.72rem">${g.hltb != null ? `~${g.hltb}h` : '<span style="color:var(--text3)">—</span>'}</td>
+      <td class="td-notes">${g.notes}</td>
+      <td>
+        <button class="btn-played ${isPlayed ? 'played' : ''}" onclick="togglePlayed('${safeName}', this)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+          ${isPlayed ? 'Done' : 'Not Yet'}
+        </button>
+      </td>`;
+
+    // Drag-to-reorder (only active in mylist view)
+    if (inList) {
+      tr.addEventListener('dragstart', e => {
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', g.name);
+        tr.classList.add('dragging');
+      });
+      tr.addEventListener('dragend', () => tr.classList.remove('dragging'));
+      tr.addEventListener('dragover', e => { e.preventDefault(); tr.classList.add('drag-over'); });
+      tr.addEventListener('dragleave', () => tr.classList.remove('drag-over'));
+      tr.addEventListener('drop', e => {
+        e.preventDefault();
+        tr.classList.remove('drag-over');
+        const fromName = e.dataTransfer.getData('text/plain');
+        const toName = g.name;
+        if (fromName === toName) return;
+        const fromIdx = myList.indexOf(fromName);
+        const toIdx = myList.indexOf(toName);
+        if (fromIdx === -1 || toIdx === -1) return;
+
+        // Update myList order
+        myList.splice(fromIdx, 1);
+        myList.splice(toIdx, 0, fromName);
+        localStorage.setItem('gametracker_list', JSON.stringify(myList));
+
+        // Surgically reorder rows in the DOM — no full rebuild
+        const tbody = document.getElementById('game-body');
+        const fromRow = tbody.querySelector(`tr[data-name="${fromName.replace(/"/g, '\\"')}"]`);
+        const toRow = tbody.querySelector(`tr[data-name="${toName.replace(/"/g, '\\"')}"]`);
+        if (!fromRow || !toRow) return;
+
+        // Kill animation before moving so there's no slide/fade
+        fromRow.style.animation = 'none';
+
+        if (fromIdx < toIdx) {
+          toRow.after(fromRow);
+        } else {
+          toRow.before(fromRow);
+        }
+
+        // Update the # position numbers in every My List row
+        const allRows = Array.from(tbody.querySelectorAll('tr:not(.hidden)'));
+        let pos = 1;
+        allRows.forEach(row => {
+          const name = row.dataset.name;
+          if (myList.includes(name)) {
+            const posCell = row.querySelector('.td-pos span');
+            if (posCell) {
+              // Replace just the text node (last child) which is the number
+              const children = Array.from(posCell.childNodes);
+              const textNode = children.find(n => n.nodeType === 3);
+              if (textNode) textNode.textContent = pos;
+            }
+            pos++;
+          }
+        });
+      });
+    }
+
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById('empty-state').classList.toggle('visible', visible === 0);
+  updateStats();
+  renderMyList();
+}
+
+function togglePlayed(name, btn) {
+  const idx = playedList.indexOf(name);
+  const nowPlayed = idx === -1;
+  if (nowPlayed) {
+    playedList.push(name);
+  } else {
+    playedList.splice(idx, 1);
+  }
+  localStorage.setItem('gametracker_played', JSON.stringify(playedList));
+
+  // Update button in place
+  btn.classList.toggle('played', nowPlayed);
+  btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>${nowPlayed ? 'Done' : 'Not Yet'}`;
+
+  // Update row class
+  const row = document.querySelector(`#game-body tr[data-name="${name.replace(/"/g, '\\"')}"]`);
+  if (row) {
+    row.classList.toggle('played', nowPlayed);
+    // Update inline badge in name cell
+    const nameLink = row.querySelector('.td-name a');
+    const existingBadge = nameLink.querySelector('.played-badge');
+    if (nowPlayed && !existingBadge) {
+      const badge = document.createElement('span');
+      badge.className = 'played-badge';
+      badge.textContent = '✓ Played';
+      nameLink.appendChild(badge);
+    } else if (!nowPlayed && existingBadge) {
+      existingBadge.remove();
+    }
+    // Hide row if filter is active and no longer matches
+    if (currentFilter === 'played' && !nowPlayed) {
+      row.classList.add('hidden');
+      const visible = document.querySelectorAll('#game-body tr:not(.hidden)').length;
+      document.getElementById('empty-state').classList.toggle('visible', visible === 0);
+    }
+  }
+
+  updateStats();
+}
+
+function toggleList(name, btn) {
+  const idx = myList.indexOf(name);
+  if (idx === -1) {
+    myList.push(name);
+    btn.classList.add('added');
+  } else {
+    myList.splice(idx, 1);
+    btn.classList.remove('added');
+  }
+  localStorage.setItem('gametracker_list', JSON.stringify(myList));
+  updateStats();
+  const rows = document.querySelectorAll('#game-body tr');
+  rows.forEach(r => {
+    if (r.dataset.name === name) r.classList.toggle('in-list', myList.includes(name));
+  });
+  if (currentFilter === 'mylist') buildTable();
+}
+
+function toggleListByName(name) {
+  const idx = myList.indexOf(name);
+  if (idx !== -1) myList.splice(idx, 1);
+  localStorage.setItem('gametracker_list', JSON.stringify(myList));
+  buildTable();
+}
+
+function updateStats() {
+  document.getElementById('stat-total').textContent = GAMES.length;
+  document.getElementById('stat-released').textContent = GAMES.filter(g => g.status === 'released').length;
+  document.getElementById('stat-upcoming').textContent = GAMES.filter(g => g.status !== 'released').length;
+  document.getElementById('stat-mylist').textContent = myList.length;
+  document.getElementById('stat-played').textContent = playedList.length;
+}
+
+function filterGames() { buildTable(); }
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('game-table').classList.toggle('mylist-view', f === 'mylist');
+  buildTable();
+}
+
+function sortTable(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = 1; }
+  document.querySelectorAll('th').forEach(t => t.classList.remove('sorted'));
+  event.currentTarget.classList.add('sorted');
+  buildTable();
+}
+
+buildTable();
+
+// Scroll to top
+const backToTopBtn = document.getElementById('back-to-top');
+if (backToTopBtn) {
+  backToTopBtn.onclick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  };
+}
+</script>
+</body>
+</html>
