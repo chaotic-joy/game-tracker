@@ -1,4 +1,4 @@
-# Game Tracker v0.1alpha
+# Game Tracker v0.1
 
 Got tired of the game tracking tools available so decided to make my own that's simple and straightforward. Will add more features as needed. Selections are stored locally so selections will only persist as long as you use the same browser and don't clear your cache (I think).
 
